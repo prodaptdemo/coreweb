@@ -4,12 +4,34 @@
 @section scripts{
     <script>
         $(function () {
-            $.getJSON('http://192.168.54.161:4001/sampleapp/getAnalysis', null, function (res) {
+            $.ajax({
+                url: 'http://localhost:1337/api/getcontacts',
+                contentType:'application/json'
+            }).done(function(res) {
                 $('.apilist').html();
-                $.each(res.lstresult, function (i, v) {
-                    $('.apilist').append($('<li class="list-group-item"/>').text(v.appName));
+                $.each(res.data, function (i, v) {
+                    $('.apilist').append($('<li class="list-group-item"/>')
+                        .append($('</p>').text(v.name)).append($('</p>').text(v.phone)).append($('</p>').text(v.location)));
                 });
-            })
+                })
+
+            $('#btnAddContact').on('click', function () {
+                $.ajax({
+                    url: 'http://localhost:1337/api/addcontact',
+                    contentType: 'application/json',
+                    method: 'POST',
+                    data: JSON.stringify({ name: $('input[name="txtname"').val(), location: $('input[name="txtlocation"').val(), phone: $('input[name="txtphone"').val() })
+                }).done(function (res) {
+                    $('.apilist').html(); 
+                    $('input[name="txtname"').val('');
+                    $('input[name="txtlocation"').val('');
+                    $('input[name="txtphone"').val('');
+                    $.each(res.data, function (i, v) {
+                        $('.apilist').append($('<li class="list-group-item"/>')
+                            .append($('</p>').text(v.name)).append($('</p>').text(v.phone)).append($('</p>').text(v.location)));
+                    });
+                })
+            });
         });
     </script>
 }
@@ -17,8 +39,29 @@
 
 
 <div class="row">
+    <div class="col-lg-12">
+        <h1>Node JS - .NET CORE - MYSQL Integration DEMO</h1>
+    </div>
     <div class="col-md-3">
-        <h2>Application uses</h2>
+        <h2>Add Contact</h2>
+        <div class="form-group">
+            <label for="txtname">Name</label>
+            <input name="txtname" class="form-control" required/>
+        </div>
+        <div class="form-group">
+            <label for="txtlocation">Location</label>
+            <input name="txtlocation" class="form-control" required/>
+        </div>
+        <div class="form-group">
+            <label for="txtphone">Phone No</label>
+            <input name="txtphone" class="form-control" required/>
+        </div>
+        <div class="form-group">
+            <button type="button" id="btnAddContact" class="btn btn-primary pull-right">Add</button>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <h2>Application uses</h2>        
         <ul class="list-group apilist"></ul>
     </div>
 </div>
