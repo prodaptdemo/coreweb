@@ -8,7 +8,7 @@
                 url: 'http://192.168.54.186:1337/api/getcontacts',
                 contentType:'application/json'
             }).done(function(res) {
-                $('.apilist').html();
+                $('.apilist').html('');
                 $.each(res.data, function (i, v) {
                     $('.apilist').append($('<li class="list-group-item"/>')
                         .append($('</p>').text(v.name)).append($('</p>').text(v.phone)).append($('</p>').text(v.location)));
@@ -22,7 +22,7 @@
                     method: 'POST',
                     data: JSON.stringify({ name: $('input[name="txtname"').val(), location: $('input[name="txtlocation"').val(), phone: $('input[name="txtphone"').val() })
                 }).done(function (res) {
-                    $('.apilist').html(); 
+                    $('.apilist').html(''); 
                     $('input[name="txtname"').val('');
                     $('input[name="txtlocation"').val('');
                     $('input[name="txtphone"').val('');
