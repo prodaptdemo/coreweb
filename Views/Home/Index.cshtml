@@ -16,6 +16,7 @@
                 })
 
             $('#btnAddContact').on('click', function () {
+                console.log("Ajax Call");
                 $.ajax({
                     url: 'http://192.168.54.186:1337/api/addcontact',
                     contentType: 'application/json',
