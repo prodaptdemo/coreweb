@@ -1,0 +1,9 @@
+C:\Users\mahendran.m\Documents\GitHub\coreweb\bin\Debug\netcoreapp1.1\coreweb.deps.json
+C:\Users\mahendran.m\Documents\GitHub\coreweb\bin\Debug\netcoreapp1.1\coreweb.runtimeconfig.json
+C:\Users\mahendran.m\Documents\GitHub\coreweb\bin\Debug\netcoreapp1.1\coreweb.runtimeconfig.dev.json
+C:\Users\mahendran.m\Documents\GitHub\coreweb\bin\Debug\netcoreapp1.1\coreweb.dll
+C:\Users\mahendran.m\Documents\GitHub\coreweb\obj\Debug\netcoreapp1.1\coreweb.csprojResolveAssemblyReference.cache
+C:\Users\mahendran.m\Documents\GitHub\coreweb\obj\Debug\netcoreapp1.1\coreweb.AssemblyInfo.cs
+C:\Users\mahendran.m\Documents\GitHub\coreweb\bin\Debug\netcoreapp1.1\coreweb.pdb
+C:\Users\mahendran.m\Documents\GitHub\coreweb\obj\Debug\netcoreapp1.1\coreweb.dll
+C:\Users\mahendran.m\Documents\GitHub\coreweb\obj\Debug\netcoreapp1.1\coreweb.pdb
