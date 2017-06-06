@@ -6,7 +6,7 @@
         $(function () {
             var tempurl = '@Url.Action("GetUrl", "Home")';
             $.ajax({
-                url: tempurl+"?variable=path",
+                url: tempurl+"?variable=API_DOMAINNAME",
                 contentType: 'application/json'
             }).done(function (tres) {
                 var url = tres.url;
@@ -25,7 +25,7 @@
             $('#btnAddContact').on('click', function () {
                 //console.log("Ajax Call");
                 $.ajax({
-                    url: tempurl + "?variable=path",
+                    url: tempurl + "?variable=API_DOMAINNAME",
                     contentType: 'application/json'
                 }).done(function (tres) {
                     var url = tres.url;
