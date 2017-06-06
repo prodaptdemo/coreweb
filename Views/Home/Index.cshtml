@@ -5,7 +5,7 @@
     <script>
         $(function () {
             $.ajax({
-                url: 'http://192.168.54.186:1337/api/getcontacts',
+                url: 'https://api.prodapt-dev.caas.prodapt.com/api/getcontacts',
                 contentType:'application/json'
             }).done(function(res) {
                 $('.apilist').html('');
@@ -18,7 +18,7 @@
             $('#btnAddContact').on('click', function () {
                 console.log("Ajax Call");
                 $.ajax({
-                    url: 'http://192.168.54.186:1337/api/addcontact',
+                    url: 'https://api.prodapt-dev.caas.prodapt.com/api/addcontact',
                     contentType: 'application/json',
                     method: 'POST',
                     data: JSON.stringify({ name: $('input[name="txtname"').val(), location: $('input[name="txtlocation"').val(), phone: $('input[name="txtphone"').val() })
