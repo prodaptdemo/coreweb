@@ -9,10 +9,13 @@ namespace coreweb.Controllers
     public class HomeController : Controller
     {
         public IActionResult Index()
-        {
+        {            
             return View();
         }
-
+        public IActionResult GetUrl(string variable)
+        {
+            return Json(new {Url= Environment.GetEnvironmentVariable(variable) });
+        }
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";

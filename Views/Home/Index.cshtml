@@ -4,34 +4,48 @@
 @section scripts{
     <script>
         $(function () {
+            var tempurl = '@Url.Action("GetUrl", "Home")';
             $.ajax({
-                url: 'https://api.prodapt-dev.caas.prodapt.com/api/getcontacts',
-                contentType:'application/json'
-            }).done(function(res) {
-                $('.apilist').html('');
-                $.each(res.data, function (i, v) {
-                    $('.apilist').append($('<li class="list-group-item"/>')
-                        .append($('</p>').text(v.name)).append($('</p>').text(v.phone)).append($('</p>').text(v.location)));
-                });
-                })
-
-            $('#btnAddContact').on('click', function () {
-                console.log("Ajax Call");
+                url: tempurl+"?variable=path",
+                contentType: 'application/json'
+            }).done(function (tres) {
+                var url = tres.url;
                 $.ajax({
-                    url: 'https://api.prodapt-dev.caas.prodapt.com/api/addcontact',
-                    contentType: 'application/json',
-                    method: 'POST',
-                    data: JSON.stringify({ name: $('input[name="txtname"').val(), location: $('input[name="txtlocation"').val(), phone: $('input[name="txtphone"').val() })
+                    url: 'http://'+url+'/api/getcontacts',
+                    contentType: 'application/json'
                 }).done(function (res) {
-                    $('.apilist').html(''); 
-                    $('input[name="txtname"').val('');
-                    $('input[name="txtlocation"').val('');
-                    $('input[name="txtphone"').val('');
+                    $('.apilist').html('');
                     $.each(res.data, function (i, v) {
                         $('.apilist').append($('<li class="list-group-item"/>')
                             .append($('</p>').text(v.name)).append($('</p>').text(v.phone)).append($('</p>').text(v.location)));
                     });
                 })
+            })
+
+            $('#btnAddContact').on('click', function () {
+                //console.log("Ajax Call");
+                $.ajax({
+                    url: tempurl + "?variable=path",
+                    contentType: 'application/json'
+                }).done(function (tres) {
+                    var url = tres.url;
+                    $.ajax({
+                        url: 'http://' + url+'/api/addcontact',
+                        contentType: 'application/json',
+                        method: 'POST',
+                        data: JSON.stringify({ name: $('input[name="txtname"').val(), location: $('input[name="txtlocation"').val(), phone: $('input[name="txtphone"').val() })
+                    }).done(function (res) {
+                        $('.apilist').html('');
+                        $('input[name="txtname"').val('');
+                        $('input[name="txtlocation"').val('');
+                        $('input[name="txtphone"').val('');
+                        $.each(res.data, function (i, v) {
+                            $('.apilist').append($('<li class="list-group-item"/>')
+                                .append($('</p>').text(v.name)).append($('</p>').text(v.phone)).append($('</p>').text(v.location)));
+                        });
+                    })
+                });
+
             });
         });
     </script>
@@ -47,22 +61,22 @@
         <h2>Add Contact</h2>
         <div class="form-group">
             <label for="txtname">Name</label>
-            <input name="txtname" class="form-control" required/>
+            <input name="txtname" class="form-control" required />
         </div>
         <div class="form-group">
             <label for="txtlocation">Location</label>
-            <input name="txtlocation" class="form-control" required/>
+            <input name="txtlocation" class="form-control" required />
         </div>
         <div class="form-group">
             <label for="txtphone">Phone No</label>
-            <input name="txtphone" class="form-control" required/>
+            <input name="txtphone" class="form-control" required />
         </div>
         <div class="form-group">
             <button type="button" id="btnAddContact" class="btn btn-primary pull-right">Add</button>
         </div>
     </div>
     <div class="col-md-6">
-        <h2>Application uses</h2>        
+        <h2>Application uses</h2>
         <ul class="list-group apilist"></ul>
     </div>
 </div>
