@@ -4,48 +4,39 @@
 @section scripts{
     <script>
         $(function () {
-            var tempurl = '@Url.Action("GetUrl", "Home")';
             $.ajax({
-                url: tempurl+"?variable=API_DOMAINNAME",
-                contentType: 'application/json'
-            }).done(function (tres) {
-                var url = tres.url;
-                $.ajax({
-                    url: 'http://'+url+'/api/getcontacts',
-                    contentType: 'application/json'
-                }).done(function (res) {
+                url: '@Url.Action("GetContacts","Home")',
+                contentType:'application/json'
+            }).done(function(res) {
+                $('.apilist').html('');
+                var result = [];
+                if (res.status) {
+                    result = JSON.parse(res.result);
+                }
+                $.each(result.data, function (i, v) {
+                    $('.apilist').append($('<li class="list-group-item"/>')
+                        .append($('</p>').text(v.name)).append($('</p>').text(v.phone)).append($('</p>').text(v.location)));
+                });
+                })
+
+            $('#btnAddContact').on('click', function () {
+                console.log("Ajax Call");
+                var data = { name: $('input[name="txtname"]').val(), location: $('input[name="txtlocation"]').val(), phone: $('input[name="txtphone"]').val() };
+                $.post('@Url.Action("SaveContact", "Home")', data, function (res) {
                     $('.apilist').html('');
-                    $.each(res.data, function (i, v) {
+                    $('input[name="txtname"]').val('');
+                    $('input[name="txtlocation"]').val('');
+                    $('input[name="txtphone"]').val('');
+                    var result = [];
+                    var rs = JSON.parse(res.result.value.result);
+                    if (rs.status) {
+                        result = rs.data;
+                    }
+                    $.each(result, function (i, v) {
                         $('.apilist').append($('<li class="list-group-item"/>')
                             .append($('</p>').text(v.name)).append($('</p>').text(v.phone)).append($('</p>').text(v.location)));
                     });
-                })
-            })
-
-            $('#btnAddContact').on('click', function () {
-                //console.log("Ajax Call");
-                $.ajax({
-                    url: tempurl + "?variable=API_DOMAINNAME",
-                    contentType: 'application/json'
-                }).done(function (tres) {
-                    var url = tres.url;
-                    $.ajax({
-                        url: 'http://' + url+'/api/addcontact',
-                        contentType: 'application/json',
-                        method: 'POST',
-                        data: JSON.stringify({ name: $('input[name="txtname"').val(), location: $('input[name="txtlocation"').val(), phone: $('input[name="txtphone"').val() })
-                    }).done(function (res) {
-                        $('.apilist').html('');
-                        $('input[name="txtname"').val('');
-                        $('input[name="txtlocation"').val('');
-                        $('input[name="txtphone"').val('');
-                        $.each(res.data, function (i, v) {
-                            $('.apilist').append($('<li class="list-group-item"/>')
-                                .append($('</p>').text(v.name)).append($('</p>').text(v.phone)).append($('</p>').text(v.location)));
-                        });
-                    })
-                });
-
+                });              
             });
         });
     </script>
@@ -57,27 +48,40 @@
     <div class="col-lg-12">
         <h1>Node JS - .NET CORE - MYSQL Integration DEMO</h1>
     </div>
-    <div class="col-md-3">
-        <h2>Add Contact</h2>
-        <div class="form-group">
-            <label for="txtname">Name</label>
-            <input name="txtname" class="form-control" required />
-        </div>
-        <div class="form-group">
-            <label for="txtlocation">Location</label>
-            <input name="txtlocation" class="form-control" required />
-        </div>
-        <div class="form-group">
-            <label for="txtphone">Phone No</label>
-            <input name="txtphone" class="form-control" required />
-        </div>
-        <div class="form-group">
-            <button type="button" id="btnAddContact" class="btn btn-primary pull-right">Add</button>
+    <div class="col-lg-12">
+        <div class="panel panel-danger">
+            <div class="panel-heading"><h5>Account : 36739307437387</h5></div>
+            <div class="panel-body">
+                <div class="list-group">
+                    <div class="list-group-item-heading list-group-item-danger"><h3>John Williams</h3></div>
+                    <div class="list-group-item text-uppercase">Plan<span class="badge alert-info">1 TB</span></div>
+                    <div class="list-group-item text-uppercase">Data Consumed<span class="badge alert-warning">2 GB</span></div>
+                    <div class="list-group-item text-uppercase">Available Data<span class="badge alert-success">998 GB</span></div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="col-md-6">
-        <h2>Application uses</h2>
-        <ul class="list-group apilist"></ul>
+    <div class="col-md-6  panel-info">
+        <div class="panel-heading"><h4>Add Contact</h4></div>
+        <div class="form-group">
+                <label for="txtname">Name</label>
+                <input id="txtname" name="txtname" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="txtlocation">Location</label>
+                <input id="txtlocation" name="txtlocation" class="form-control" required />
+            </div>
+            <div class="form-group">
+                <label for="txtphone">Phone No</label>
+                <input id="txtphone" name="txtphone" class="form-control" required />
+            </div>
+            <div class="form-group text-center">
+                <button type="button" id="btnAddContact" class="btn btn-primary">Add</button>
+            </div>
+    </div>
+    <div class="col-md-6 panel-info">       
+        <div class="panel-heading"><h4>Contact List</h4></div>
+        <div class="list-group apilist"></div>
     </div>
 </div>
 
