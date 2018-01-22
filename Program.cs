@@ -16,7 +16,8 @@ namespace coreweb
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
-                .UseApplicationInsights()                
+                .UseApplicationInsights()     
+                .UseUrls("http://0.0.0.0:5000")
                 .Build();
 
             host.Run();
